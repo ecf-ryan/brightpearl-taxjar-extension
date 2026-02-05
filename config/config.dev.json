@@ -1,0 +1,7 @@
+{
+  "apiKeys": {
+    "zipcode": "DEV_ZIPCODE_API_KEY"
+  },
+  "baseUrl": "http://localhost:3000/",
+  "environment": "development"
+}

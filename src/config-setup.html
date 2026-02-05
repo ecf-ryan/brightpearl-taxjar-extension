@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brightpearl TaxJar - Configuration</title>
+  <link rel="stylesheet" href="config-setup.css">
+</head>
+<body>
+  <div class="config-container">
+    <header>
+      <h1>Extension Configuration</h1>
+      <p class="subtitle">Configure your API keys and backend URL for the TaxJar extension.</p>
+    </header>
+
+    <form id="config-form">
+      <div class="form-group">
+        <label for="zipcode-key">Zipcode API Key:</label>
+        <input
+          type="text"
+          id="zipcode-key"
+          required
+          placeholder="Enter your zipcodeapi.com API key"
+        >
+        <small class="help-text">Get your API key from <a href="https://www.zipcodeapi.com/" target="_blank">zipcodeapi.com</a></small>
+      </div>
+
+      <div class="form-group">
+        <label for="base-url">Backend Webhook URL:</label>
+        <input
+          type="url"
+          id="base-url"
+          required
+          placeholder="https://your-backend.com/"
+        >
+        <small class="help-text">Your TaxJar webhook server URL (include trailing slash)</small>
+      </div>
+
+      <button type="submit" class="btn-primary">Save Configuration</button>
+    </form>
+
+    <div id="status" class="status-message"></div>
+
+    <footer>
+      <p>Configuration is stored securely in Chrome's encrypted storage.</p>
+    </footer>
+  </div>
+
+  <script src="config-setup.js"></script>
+</body>
+</html>

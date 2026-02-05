@@ -1,0 +1,7 @@
+{
+  "apiKeys": {
+    "zipcode": "REPLACE_WITH_YOUR_ZIPCODE_API_KEY"
+  },
+  "baseUrl": "REPLACE_WITH_YOUR_BACKEND_URL",
+  "environment": "production"
+}

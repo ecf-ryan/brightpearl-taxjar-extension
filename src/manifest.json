@@ -1,0 +1,26 @@
+{
+   "background": {
+      "service_worker": "background.js"
+   },
+   "action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+   },
+   "content_scripts": [ {
+      "js": [ "config-manager.js", "utils.js", "content.js" ],
+      "matches": [ "http://*.brightpearl.com/*", "https://*.brightpearl.com/*", "http://*.brightpearlapp.com/*", "https://*.brightpearlapp.com/*" ]
+   } ],
+   "options_page": "config-setup.html",
+   "description": "This extension allows the user to calculate the tax based on state , city and zipcode from taxJar API.",
+   "icons": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+   },
+   "manifest_version": 3,
+   "name": "Brightpearl TaxJar",
+   "version": "2.0.0",
+   "author": "East Coast Fabrics",
+   "permissions": ["scripting", "storage", "activeTab"],
+   "host_permissions": [ "http://*.brightpearl.com/*", "https://*.brightpearl.com/*", "http://*.brightpearlapp.com/*", "https://*.brightpearlapp.com/*"]
+}

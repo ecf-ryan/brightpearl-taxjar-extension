@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brightpearl TaxJar</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="mainpopup">
+    <p>This extension allows the user to update the state and city based on the zipcode.</p>
+    <div class="mainpopup-inner" style="display:none;">
+      <p>
+        <label for="zipcode">Enter zipcode</label>
+        <input type="text" name="zipcode" id="zipcode" maxlength="5" pattern="[0-9]{5}">
+      </p>
+      <button id="ok_btn">Fetch details</button>
+    </div>
+  </div>
+  <script src="myscript.js"></script>
+</body>
+</html>
