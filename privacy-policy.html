@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Brightpearl TaxJar Chrome Extension</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 20px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .meta {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .meta p {
+            margin: 5px 0;
+        }
+        ul {
+            margin: 10px 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 30px 0;
+        }
+        .important {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Privacy Policy - Brightpearl TaxJar Chrome Extension</h1>
+
+    <div class="meta">
+        <p><strong>Last Updated:</strong> February 5, 2026</p>
+        <p><strong>Version:</strong> 2.0.0</p>
+        <p><strong>Developer:</strong> East Coast Fabrics</p>
+    </div>
+
+    <h2>Overview</h2>
+    <p>This privacy policy describes how the Brightpearl TaxJar Chrome extension ("the Extension") collects, uses, and protects information when you use our service.</p>
+
+    <div class="important">
+        <strong>In Short:</strong> We do not collect, store, or transmit any personal information. Your API keys and configuration are stored locally on your device only.
+    </div>
+
+    <hr>
+
+    <h2>Information We Collect</h2>
+
+    <h3>User-Provided Configuration</h3>
+    <p>The Extension requires you to provide:</p>
+    <ol>
+        <li><strong>Zipcode API Key</strong> - From zipcodeapi.com for address lookup functionality</li>
+        <li><strong>Backend Webhook URL</strong> - Your TaxJar webhook server URL for tax calculations</li>
+    </ol>
+
+    <p><strong>Storage Location:</strong> This information is stored locally in Chrome's encrypted <code>chrome.storage.local</code> on your device only. It never leaves your computer except when making API calls you explicitly initiate.</p>
+
+    <h3>Automatically Collected Information</h3>
+    <p><strong>We collect NOTHING automatically.</strong> The Extension does not:</p>
+    <ul>
+        <li>Track your browsing history</li>
+        <li>Collect analytics or telemetry</li>
+        <li>Send usage data to any servers</li>
+        <li>Use cookies or tracking pixels</li>
+        <li>Monitor your activity</li>
+        <li>Collect personally identifiable information</li>
+    </ul>
+
+    <hr>
+
+    <h2>How We Use Information</h2>
+
+    <h3>Configuration Data</h3>
+    <p>Your stored API keys and configuration are used solely to:</p>
+    <ul>
+        <li>Authenticate with the Zipcode API when you click "Fetch details"</li>
+        <li>Send order data to your configured TaxJar backend when you click "Calculate Taxes"</li>
+    </ul>
+
+    <h3>Order Data</h3>
+    <p>When you use the tax calculation feature, the Extension:</p>
+    <ol>
+        <li>Reads order information from the current Brightpearl page (items, quantities, addresses)</li>
+        <li>Sends this data to YOUR configured TaxJar webhook backend</li>
+        <li>Receives tax calculation results</li>
+        <li>Populates tax codes on the Brightpearl page</li>
+    </ol>
+
+    <div class="important">
+        <strong>Important:</strong>
+        <ul>
+            <li>Order data is only accessed when you click "Calculate Taxes"</li>
+            <li>Data is sent ONLY to your configured backend URL</li>
+            <li>We (the extension developers) never see or receive this data</li>
+            <li>No data is stored or cached by the Extension</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2>Third-Party Services</h2>
+    <p>The Extension communicates with two external services that YOU configure:</p>
+
+    <h3>1. Zipcode API (zipcodeapi.com)</h3>
+    <ul>
+        <li><strong>When:</strong> You click "Fetch details" in the extension popup</li>
+        <li><strong>Data Sent:</strong> 5-digit US zipcode you enter</li>
+        <li><strong>Data Received:</strong> City and state information</li>
+        <li><strong>Your Responsibility:</strong> Review <a href="https://www.zipcodeapi.com/privacy">Zipcode API Privacy Policy</a></li>
+    </ul>
+
+    <h3>2. Your TaxJar Backend Webhook</h3>
+    <ul>
+        <li><strong>When:</strong> You click "Calculate Taxes" on a Brightpearl order</li>
+        <li><strong>Data Sent:</strong> Order details (items, quantities, addresses, account information)</li>
+        <li><strong>Data Received:</strong> Tax calculation results (tax codes, rates)</li>
+        <li><strong>Your Responsibility:</strong> This is YOUR server. You control its privacy practices.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Data Storage and Security</h2>
+
+    <h3>Local Storage Only</h3>
+    <p>All configuration data is stored locally using Chrome's secure storage API:</p>
+    <ul>
+        <li>Stored in encrypted <code>chrome.storage.local</code></li>
+        <li>Only accessible by this extension</li>
+        <li>Never transmitted to our servers (we have no servers)</li>
+        <li>Remains on your device until you uninstall the extension</li>
+    </ul>
+
+    <h3>No Remote Servers</h3>
+    <p>We do not operate any servers that collect or store your data. The extension communicates only with:</p>
+    <ul>
+        <li>Zipcode API (for address lookup)</li>
+        <li>Your configured TaxJar backend (for tax calculation)</li>
+    </ul>
+
+    <hr>
+
+    <h2>Data Sharing</h2>
+    <p><strong>We do not share, sell, or distribute your data.</strong></p>
+    <p>The extension developers have no access to:</p>
+    <ul>
+        <li>Your API keys</li>
+        <li>Your backend URL</li>
+        <li>Your Brightpearl data</li>
+        <li>Your order information</li>
+        <li>Any usage data</li>
+    </ul>
+
+    <hr>
+
+    <h2>Permissions Explained</h2>
+    <p>The Extension requests the following Chrome permissions:</p>
+
+    <h3>scripting</h3>
+    <p><strong>Purpose:</strong> Inject tax calculation functionality into Brightpearl order pages</p>
+    <p><strong>Usage:</strong> Adds the "Calculate Taxes" button and handles tax code population</p>
+
+    <h3>storage</h3>
+    <p><strong>Purpose:</strong> Securely store API keys and configuration settings</p>
+    <p><strong>Usage:</strong> Saves your zipcode API key and backend URL locally</p>
+
+    <h3>activeTab</h3>
+    <p><strong>Purpose:</strong> Access the current Brightpearl tab for zipcode lookup</p>
+    <p><strong>Usage:</strong> Reads and updates address fields when you use zipcode lookup</p>
+
+    <h3>host_permissions (brightpearl.com, brightpearlapp.com)</h3>
+    <p><strong>Purpose:</strong> Restrict extension to only operate on Brightpearl domains</p>
+    <p><strong>Usage:</strong> Security measure ensuring extension only activates on authorized pages</p>
+
+    <hr>
+
+    <h2>Your Rights</h2>
+
+    <h3>Data Access</h3>
+    <p>All your data is stored locally. You can view it at any time:</p>
+    <ul>
+        <li>Right-click extension icon → Options to view configuration</li>
+        <li>Chrome DevTools → Application → Storage to inspect chrome.storage</li>
+    </ul>
+
+    <h3>Data Deletion</h3>
+    <p>To delete all extension data:</p>
+    <ol>
+        <li>Go to <code>chrome://extensions/</code></li>
+        <li>Find "Brightpearl TaxJar"</li>
+        <li>Click "Remove"</li>
+    </ol>
+    <p>This immediately deletes all stored configuration and API keys.</p>
+
+    <h3>Data Modification</h3>
+    <p>You can modify your configuration at any time:</p>
+    <ul>
+        <li>Right-click extension icon → Options</li>
+        <li>Update API keys or backend URL</li>
+        <li>Click "Save Configuration"</li>
+    </ul>
+
+    <hr>
+
+    <h2>Children's Privacy</h2>
+    <p>This Extension is not directed at children under 13. We do not knowingly collect information from children. This is a business tool for Brightpearl users.</p>
+
+    <hr>
+
+    <h2>Changes to This Policy</h2>
+    <p>We may update this privacy policy from time to time. Changes will be reflected in:</p>
+    <ul>
+        <li>The "Last Updated" date at the top</li>
+        <li>The Extension version number</li>
+        <li>Chrome Web Store listing updates</li>
+    </ul>
+    <p>Continued use of the Extension after changes constitutes acceptance of the updated policy.</p>
+
+    <hr>
+
+    <h2>Contact Information</h2>
+    <p><strong>Developer:</strong> East Coast Fabrics</p>
+    <p>For questions about this privacy policy or the Extension, please contact the developer through the Chrome Web Store listing.</p>
+
+    <hr>
+
+    <h2>Compliance</h2>
+
+    <h3>Chrome Web Store Policies</h3>
+    <p>This Extension complies with:</p>
+    <ul>
+        <li>Chrome Web Store Developer Program Policies</li>
+        <li>Chrome Extension Manifest V3 requirements</li>
+        <li>Limited Use disclosure requirements</li>
+    </ul>
+
+    <h3>Data Minimization</h3>
+    <p>We follow the principle of data minimization:</p>
+    <ul>
+        <li>Only collect data necessary for functionality</li>
+        <li>No analytics or tracking</li>
+        <li>No unnecessary permissions</li>
+        <li>Local storage only</li>
+    </ul>
+
+    <hr>
+
+    <h2>Summary</h2>
+    <div class="important">
+        <p><strong>Quick Summary:</strong></p>
+        <ul>
+            <li>✅ We collect no personal information</li>
+            <li>✅ All data stored locally on your device</li>
+            <li>✅ No tracking or analytics</li>
+            <li>✅ Only works on Brightpearl pages</li>
+            <li>✅ You control all data</li>
+            <li>✅ Open source code available for audit</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <p style="text-align: center; color: #7f8c8d; margin-top: 40px;">
+        <small>This privacy policy was last updated on February 5, 2026 for version 2.0.0 of the Brightpearl TaxJar Chrome Extension.</small>
+    </p>
+</body>
+</html>
