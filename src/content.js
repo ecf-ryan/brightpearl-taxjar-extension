@@ -64,8 +64,17 @@ chrome.runtime.sendMessage({
       body: formData
     });
 
+    if (!response.ok) {
+      throw new Error(`Backend error: ${response.status} ${response.statusText}`);
+    }
+
     const text = await response.text();
-    return JSON.parse(text);
+    try {
+      return JSON.parse(text);
+    } catch (error) {
+      console.error('Invalid JSON response:', text);
+      throw new Error(`Backend returned invalid JSON: ${text.substring(0, 100)}`);
+    }
   }
 
   // Setup UI for tax calculation
@@ -99,6 +108,21 @@ chrome.runtime.sendMessage({
     if (finalTaxCalculated === 1) {
       if (taxCode > 0 && noTaxCode > 0) {
         updateTaxCodes(taxCode, noTaxCode);
+      }
+
+      // After a redirect from Calculate Taxes, verify the fields updated and notify the user
+      if (sessionStorage.getItem('taxjar_just_calculated') === '1') {
+        sessionStorage.removeItem('taxjar_just_calculated');
+
+        const taxInputs = document.querySelectorAll("#details_table input[name='rwTotalTaxUser[]']");
+        const hasLineTax = Array.from(taxInputs).some(input => parseFloat(input.value) > 0);
+        const pcfUpdated = tjTaxCalculated.toLowerCase() === 'yes';
+
+        if (pcfUpdated || hasLineTax) {
+          showToast('Tax calculated successfully. Fields have been updated.', true);
+        } else {
+          showToast('Tax was submitted but the fields do not appear to have updated. Please verify the order before invoicing.', false);
+        }
       }
     } else {
       // Disable save button until tax calculated
@@ -344,23 +368,105 @@ chrome.runtime.sendMessage({
     };
   }
 
+  // Show a dismissible toast banner at the top-right of the page
+  function showToast(message, isSuccess) {
+    const existing = document.getElementById('taxjar-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'taxjar-toast';
+    Object.assign(toast.style, {
+      position: 'fixed',
+      top: '20px',
+      right: '20px',
+      zIndex: '999999',
+      padding: '14px 40px 14px 18px',
+      borderRadius: '6px',
+      fontSize: '14px',
+      fontWeight: '600',
+      color: 'white',
+      backgroundColor: isSuccess ? '#28a745' : '#cc0000',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+      maxWidth: '380px',
+      lineHeight: '1.5',
+      fontFamily: 'sans-serif'
+    });
+    toast.textContent = message;
+
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '×';
+    Object.assign(closeBtn.style, {
+      position: 'absolute',
+      top: '8px',
+      right: '10px',
+      background: 'none',
+      border: 'none',
+      color: 'white',
+      fontSize: '18px',
+      cursor: 'pointer',
+      lineHeight: '1'
+    });
+    closeBtn.addEventListener('click', () => toast.remove());
+    toast.appendChild(closeBtn);
+
+    document.body.appendChild(toast);
+    setTimeout(() => toast?.remove(), 8000);
+  }
+
   // Calculate taxes via backend API
+  function reloadWithTcal() {
+    sessionStorage.setItem('taxjar_just_calculated', '1');
+    const reloadUrl = new URL(window.location.href);
+    reloadUrl.searchParams.set('tcal', '1');
+    window.location.href = reloadUrl.toString();
+  }
+
   async function calculateTaxes(orderData) {
     const url = `${baseUrl}webhooks/calculateTaxLines`;
     const formData = new URLSearchParams(orderData);
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formData
-    });
+    // The backend commits tax data within ~10 seconds but may take several
+    // minutes to send a response. Abort and redirect after 20 seconds —
+    // the server-side processing continues after the client disconnects.
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+      reloadWithTcal();
+    }, 20000);
+
+    let response;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData,
+        signal: controller.signal
+      });
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        return; // timeout already triggered reloadWithTcal()
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
+    }
+
+    if (!response.ok) {
+      throw new Error(`Backend error: ${response.status} ${response.statusText}`);
+    }
 
     const text = await response.text();
-    const returnedData = JSON.parse(text);
+    let returnedData;
+    try {
+      returnedData = JSON.parse(text);
+    } catch (error) {
+      console.error('Invalid JSON response:', text);
+      throw new Error(`Backend returned invalid JSON: ${text.substring(0, 100)}`);
+    }
 
     // Handle response
-    if (returnedData.messge) {
-      alert(returnedData.messge);
+    if (returnedData.message) {
+      alert(returnedData.message);
     } else if (returnedData.exempted) {
       const saveBtn = document.getElementById('sale-invoice-btn');
       if (saveBtn) {
@@ -369,9 +475,9 @@ chrome.runtime.sendMessage({
       }
       alert(returnedData.exempted);
     } else if (returnedData.success) {
-      // Reload page with tcal=1 parameter
-      let docUrl = window.location.href.replace("#", "");
-      window.location.href = docUrl + '&tcal=1';
+      reloadWithTcal();
+    } else {
+      alert('Tax calculation completed but the server response was unexpected. Please refresh the page manually.');
     }
   }
 

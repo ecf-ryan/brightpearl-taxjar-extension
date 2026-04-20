@@ -1,6 +1,6 @@
 {
   "name": "brightpearl-taxjar-extension",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Brightpearl TaxJar Chrome Extension - Enterprise Package",
   "private": true,
   "scripts": {
